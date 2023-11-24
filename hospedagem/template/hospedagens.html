@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block center %}
+  <h2> Lista de Hospedagens</h2>
+
+  <form method="get">
+   
+    <div class="mb-3">
+        <label for="nome" class="form-label">Cliente</label>
+        {{form.cliente}}
+    </div>
+   
+    <div class="row">
+      <div class="col-md-6 mb-3">
+          <label for="cidade" class="form-label">Quarto</label>
+          {{form.quarto}}
+      </div>
+    </div>
+  
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+  </form>
+
+
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'hospedagem_criar' %}" class="btn btn-success mb-3">Novo Cadastro</a>
+  </div>
+
+
+
+
+  <table class="table table-bordered" >
+    <thead>
+      <tr>
+        <th>Data de Entrada</th>
+        <th>Data de Saida</th>
+        <th>Valor</th>
+        <th>Cliente</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for hospedagem in hospedagens %}  
+      <tr>
+        <td>{{ hospedagem.data_entrada }}</td>
+        <td>{{ hospedagem.data_saida }}</td>
+        <td>{{ hospedagem.valor }}</td>
+        <td>{{ hospedagem.cliente }}</td>
+        <td>
+          <a href="{% url 'hospedagem_editar' hospedagem.pk %}" class="btn btn-primary btn-sm">Editar</a>
+          <a href="{% url 'hospedagem_deletar' hospedagem.pk %}" class="btn btn-danger btn-sm">Remover</a>
+          <a href="{% url 'hospedagem_detalhes' hospedagem.pk %}" class="btn btn-primary btn-sm">Detalhes</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% include 'pagination.html' %}
+  
+
+{% endblock %}
